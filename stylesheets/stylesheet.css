@@ -258,10 +258,6 @@ form {
 Full-Width Styles
 *******************************************************************************/
 
-.outer {
-  width: 100%;
-}
-
 .inner {
   position: relative;
   max-width: 640px;

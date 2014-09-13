@@ -1,16 +1,27 @@
+body{
+	overflow-x: hidden;
+}
+
 #header_wrap{
-	padding: 50px;
+	margin-top: 25px;
+	padding-left: 25px;
 }
 
 #header_image{
-	height: 100px;
-	width: 100px;
+	height: 50px;
+	width: 50px;
 }
 
 #forkme_banner{
+	position: fixed;
 	background: url('../images/blacktocat.png') #FFFFFF no-repeat;
 	background-size: contain;
 	padding-right: 10px;
+}
+
+#forkme_banner:hover{
+	box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+	text-decoration: none;
 }
 
 #github_text{
