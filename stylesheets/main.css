@@ -1,4 +1,19 @@
+#header_wrap{
+	padding: 50px;
+}
+
 #header_image{
 	height: 100px;
 	width: 100px;
+}
+
+#forkme_banner{
+	background: url('../images/blacktocat.png') #FFFFFF no-repeat;
+	background-size: contain;
+	padding-right: 10px;
+}
+
+#github_text{
+	padding-left:35px;
+	color: black;
 }
