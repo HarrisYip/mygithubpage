@@ -14,7 +14,7 @@ body{
 
 #forkme_banner{
 	position: fixed;
-	background: url('../images/blacktocat.png') #FFFFFF no-repeat;
+	background: url('../img/blacktocat.png') #FFFFFF no-repeat;
 	background-size: contain;
 	padding-right: 10px;
 }

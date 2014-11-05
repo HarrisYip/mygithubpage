@@ -74,7 +74,7 @@ h1 {
 h2 {
   padding-bottom: 10px;
   font-size: 32px;
-  background: url('../images/bg_hr.png') repeat-x bottom;
+  background: url('../img/bg_hr.png') repeat-x bottom;
 }
 
 h3 {
@@ -228,7 +228,7 @@ hr {
   height: 1px;
   margin-bottom: 5px;
   border: none;
-  background: url('../images/bg_hr.png') repeat-x center;
+  background: url('../img/bg_hr.png') repeat-x center;
 }
 
 table {
@@ -293,13 +293,7 @@ Full-Width Styles
   padding: 50px 10px 30px 10px;
 }
 
-#project_title {
-  margin: 0;
-  color: #fff;
-  font-size: 42px;
-  font-weight: 700;
-  text-shadow: #111 0px 0px 10px;
-}
+
 
 #project_tagline {
   color: #fff;
@@ -360,60 +354,4 @@ Full-Width Styles
 
 #footer_wrap {
   background: #212121;
-}
-
-
-
-/*******************************************************************************
-Small Device Styles
-*******************************************************************************/
-
-@media screen and (max-width: 480px) {
-  body {
-    font-size:14px;
-  }
-
-  #downloads {
-    display: none;
-  }
-
-  .inner {
-    min-width: 320px;
-    max-width: 480px;
-  }
-
-  #project_title {
-  font-size: 32px;
-  }
-
-  h1 {
-    font-size: 28px;
-  }
-
-  h2 {
-    font-size: 24px;
-  }
-
-  h3 {
-    font-size: 21px;
-  }
-
-  h4 {
-    font-size: 18px;
-  }
-
-  h5 {
-    font-size: 14px;
-  }
-
-  h6 {
-    font-size: 12px;
-  }
-
-  code, pre {
-    min-width: 320px;
-    max-width: 480px;
-    font-size: 11px;
-  }
-
 }
