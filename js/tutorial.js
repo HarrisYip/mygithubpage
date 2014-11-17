@@ -26,10 +26,25 @@ var CommentList = React.createClass({displayName: 'CommentList',
 });
 
 var CommentForm = React.createClass({displayName: 'CommentForm',
+	handleSubmit: function(e){
+		e.preventDefault();
+		var author = this.refs.author_form.getDOMNode().value.trim();
+		var comment = this.refs.comment_form.getDOMNode().value.trim();
+		
+		if (!author || !comment){
+			return;
+		}
+		this.props.onCommentSubmit({author: author, text: comment});
+		this.refs.author_form.getDOMNode().value = '';
+		this.refs.comment_form.getDOMNode().value = '';
+		return;
+	},
 	render: function(){
 		return (
-			React.createElement("div", {className: "commentForm"}, 
-				"Hello, I am commentForm"
+			React.createElement("form", {className: "commentForm", onSubmit: this.handleSubmit}, 
+				React.createElement("input", {type: "text", placeholder: "Name", ref: "author_form"}), 
+				React.createElement("input", {type: "text", placeholder: "Comment", ref: "comment_form"}), 
+				React.createElement("input", {type: "submit", value: "Post"})
 			)	
 		);
 	}
@@ -39,7 +54,7 @@ var CommentBox = React.createClass({displayName: 'CommentBox',
 	getInitialState: function(){
 		return {data:[]};
 	},
-	componentDidMount: function(){
+	loadCommentsFromServer: function(){
 		$.ajax({
 			url: this.props.url,
 			dataType: 'json',
@@ -51,18 +66,37 @@ var CommentBox = React.createClass({displayName: 'CommentBox',
 			}.bind(this)
 		});
 	},
+	componentDidMount: function(){
+		this.loadCommentsFromServer();
+		setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+	},
+	handleSubmit: function(commentObject){
+		console.log("WORKS");
+		$.ajax({
+	      url: this.props.url,
+	      dataType: 'json',
+	      type: 'POST',
+	      data: commentObject,
+	      success: function(data) {
+	        this.setState({data: data});
+	      }.bind(this),
+	      error: function(xhr, status, err) {
+	        console.error(this.props.url, status, err.toString());
+	      }.bind(this)
+    	});
+	},
 	render: function(){
 		return (
 			React.createElement("div", {className: "commentBox"}, 
 				React.createElement("h1", null, "Comments"), 
 				React.createElement(CommentList, {data: this.state.data}), 
-				React.createElement(CommentForm, null)
+				React.createElement(CommentForm, {onCommentSubmit: this.handleSubmit})
 			)
 		);
 	}
 });
 
 React.render(
-	React.createElement(CommentBox, {url: "comments.json"}),
+	React.createElement(CommentBox, {url: "comments.json", pollInterval: 2000}),
 	document.getElementById('content')
 );
