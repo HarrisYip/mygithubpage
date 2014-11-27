@@ -59,7 +59,9 @@ var CommentBox = React.createClass({
 			url: this.props.url,
 			dataType: 'json',
 			success: function(data){
-				this.setState({data : data});
+				if(this.isMounted()) {
+	        		this.setState({data: data});
+        		}
 			}.bind(this),
 			error: function(xhr, status, err){
 				console.error(this.props.url, status, err.toString());
@@ -78,7 +80,9 @@ var CommentBox = React.createClass({
 	      type: 'POST',
 	      data: commentObject,
 	      success: function(data) {
-	        this.setState({data: data});
+	      	if(this.isMounted()) {
+	        	this.setState({data: data});
+	        }
 	      }.bind(this),
 	      error: function(xhr, status, err) {
 	        console.error(this.props.url, status, err.toString());
@@ -100,3 +104,90 @@ React.render(
 	<CommentBox url="comments.json" pollInterval={2000}/>,
 	document.getElementById('content')
 );
+
+var Resume = React.createClass({
+	render: function() {
+		return (
+			<div> TEST </div>
+		);
+	}
+});
+
+var menuItems = ["Home", "Resume"];
+
+var SideBarItem = React.createClass({
+	handleOnClick: function(event, key) {
+		console.log(event);
+	},
+	render: function(){
+		var children = this.props.children;
+		return (
+			<li className="menuItem" onClick={this.props.onClick.bind(null, children)}> {children} </li>
+		);
+	}
+});
+
+var SideBar = React.createClass({
+	showHomeView: function() {
+		$('#resume').hide();
+		$('#content').show();
+		toggleSidebar();
+
+		React.render(
+			<CommentBox url="comments.json" pollInterval={2000}/>,
+			document.getElementById('content')
+		);
+	},
+	showResumeView: function() {
+		$('#content').hide();
+		$('#resume').show();
+		toggleSidebar();
+		PDFJS.getDocument('harrisWarrenYip.pdf').then(function(pdf) {
+			pdf.getPage(1).then(function(page) {
+				var scale = 1;
+				var viewport = page.getViewport(scale);
+
+				var canvas = document.getElementById('resume');
+				var context = canvas.getContext('2d');
+				canvas.height = viewport.height;
+				canvas.width = viewport.width;
+
+				var renderContext = {
+				  canvasContext: context,
+				  viewport: viewport
+				};
+				page.render(renderContext);
+				$("#resume").css({display: "block"});
+			});
+		});
+
+	},
+	handleOnClick: function(item) {
+		if (item[1] === "Home") {
+			this.showHomeView();
+		} else if (item[1] === "Resume"){
+			this.showResumeView();
+		}
+	},
+	render: function(){
+		var handleOnClick = this.handleOnClick;
+		var menuNodes = menuItems.map(function (item, i){
+			return (
+				<SideBarItem
+				 key={i}
+				 onClick={handleOnClick}
+				> {item} </SideBarItem>
+			);
+		});
+		return (
+			<ul id="sidebarList">
+				{menuNodes}
+			</ul>
+		);
+	}
+});
+
+React.render(
+	<SideBar />,
+	document.getElementById('sidebar')
+); 

@@ -12,32 +12,53 @@
     <script src="http://fb.me/react-0.12.0.js"></script>
     <script src="http://fb.me/JSXTransformer-0.12.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
-
+    <script src="js/pdfjs/build/pdf.js"></script>
     <title>Harris Yip</title>
   </head>
 
   <body>
-    <a id="forkme_banner" href="https://github.com/harrisyip/">
-      <div id="github_text">
-        View my GitHub
-      </div>
-    </a>
-    <div id="header_wrap" class="outer">
-      <div id="home_bar">
+    <div id="sidebar"></div>
+    <div id="content_wrapper">
+      <div id="mask"></div>
+      <a id="forkme_banner" href="https://github.com/harrisyip/">
+        <div id="github_text">
+          View my GitHub
+        </div>
+      </a>
+      <div id="header_wrap" class="outer">
+        <img id="menu_icon" src="img/menuIcon.png" />
         <img id="header_image" src="img/harris_yip.jpg"/>
         <span id="header_title">Harris Yip</span>
       </div>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to my webpage</h3>
-        <p> It's under construction right now, please come back later!</p>
-      </section>
-      <div id="content"></div>
+      <!-- MAIN CONTENT -->
+      <div id="main_content_wrap" class="outer">
+        <div id="content"></div>
+        <canvas id="resume" />
+      </div>
     </div>
   </body>
   <script src="js/tutorial.js"></script>
+  <script type="text/javascript">
+    function toggleSidebar(){
+      if($('#sidebar').css("left") < "0px"){
+        $("#sidebar").animate({left: "0px"});
+        $("#content_wrapper").animate({left: "20%"});
+        $("#mask").show();
+        $("body").css({overflow: "hidden"});
+      } else {
+        $("#sidebar").animate({left: "-20%"});
+        $("#content_wrapper").animate({left: "0"});
+        $("#mask").hide();
+
+        $("body").css({overflow: "scroll"});
+      }
+    }
+
+    $(document).ready(function(){
+      $("#menu_icon").click(toggleSidebar);
+      $("#mask").click(toggleSidebar);
+    });
+  </script>
 
 </html>
